@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <title>Title</title>
+    <script>
+        function test1()
+        {
+            let textval = $("#test1").val();
+            $.ajax({
+                    type: "GET",
+                    url: `/forclient1/${textval}`,
+                    success: function (response) {
+                        $('#cardbyoneuser').empty()
+                        for (let i = 0; i < response.length; i++) {
+                            response[i];
+                            let temphtml = `<tr>
+                                                <td>${response[i].id}</td>
+                                                <td>${response[i].insertDt}</td>
+                                                <td>${response[i].modifiedDt}</td>
+                                                <td>${response[i].cardOrder}</td>
+                                                <td>${response[i].content}</td>
+                                                <td>${response[i].filePath}</td>
+                                                <td>${response[i].hashTagsString}</td>
+                                                <td>${response[i].title}</td>
+                                                <td>${textval}</td>
+
+                                            </tr>`
+                            $('#cardbyoneuser').append(temphtml);
+
+                        }
+                    }
+                }
+            )
+        }
+        function test2()
+        {
+            let textval = $("#test2_1").val();
+            $.ajax({
+                    type: "GET",
+                    url: `/forclient2/${textval}`,
+                    success: function (response) {
+                        $('#oneuserbyid').empty()
+                        let temphtml = `<tr>
+                                            <td>${response.id}</td>
+                                            <td>${response.insertDt}</td>
+                                            <td>${response.modifiedDt}</td>
+                                            <td>${response.authorityEnum}</td>
+                                            <td>${response.email}</td>
+                                            <td>${response.kakaoId}</td>
+                                            <td>${response.profile}</td>
+                                            <td>commonpw (아닌것도있음)</td>
+                                            <td>${response.userName}</td>
+                                        </tr>`
+                        $('#oneuserbyid').append(temphtml);
+
+                        }
+                    }
+            )
+        }
+        function test3()
+        {
+            let textval = $("#test3").val();
+            $.ajax({
+                    type: "GET",
+                    url: `/forclient3/${textval}`,
+                    success: function (response) {
+                        $('#oneuserbyemal').empty()
+                        let temphtml = `<tr>
+                                            <td>${response.id}</td>
+                                            <td>${response.insertDt}</td>
+                                            <td>${response.modifiedDt}</td>
+                                            <td>${response.authorityEnum}</td>
+                                            <td>${response.email}</td>
+                                            <td>${response.kakaoId}</td>
+                                            <td>${response.profile}</td>
+                                            <td>commonpw (아닌것도있음)</td>
+                                            <td>${response.userName}</td>
+                                        </tr>`
+                        $('#oneuserbyemal').append(temphtml);
+
+                    }
+                }
+            )
+        }
+        function test4()
+        {
+            let textval = $("#test4").val();
+            $.ajax({
+                    type: "GET",
+                    url: `/forclient4/${textval}`,
+                    success: function (response) {
+                        $('#cardone').empty()
+                        let temphtml = `<tr>
+                                            <td>${response.id}</td>
+                                            <td>${response.insertDt}</td>
+                                            <td>${response.modifiedDt}</td>
+                                            <td>${response.cardOrder}</td>
+                                            <td>${response.content}</td>
+                                            <td>${response.filePath}</td>
+                                            <td>${response.hashTagsString}</td>
+                                            <td>${response.title}</td>
+                                            <td>${textval}</td>
+
+                                        </tr>`
+                        $('#cardone').append(temphtml);
+
+
+                    }
+                }
+            )
+        }
+    </script>
+</head>
+<body>
+<input type = "text" id = "test1" placeholder="userID 입력해주세요">
+<button onclick="test1()">
+    번유저(userId)가 쓴 카드 모두 조회
+</button>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">cardId</th>
+        <th scope="col">생성일</th>
+        <th scope="col">수정일</th>
+        <th scope="col">카드순서</th>
+        <th scope="col">내용</th>
+        <th scope="col">경로</th>
+        <th scope="col">해시태그들</th>
+        <th scope="col">제목</th>
+        <th scope="col">userId</th>
+    </tr>
+    </thead>
+    <tbody id="cardbyoneuser">
+
+    </tbody>
+</table>
+<br>
+<input type = "text" id = "test2_1" placeholder="userID 입력해주세요">
+<button onclick="test2()">
+    번유저(userId)의 정보 조희
+</button>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">userId</th>
+        <th scope="col">가입일</th>
+        <th scope="col">수정일</th>
+        <th scope="col">권한(정상아님)</th>
+        <th scope="col">Email</th>
+        <th scope="col">kakaoId</th>
+        <th scope="col">프로필사진경로</th>
+        <th scope="col">비밀번호</th>
+        <th scope="col">유저이름</th>
+    </tr>
+    </thead>
+    <tbody id="oneuserbyid">
+
+    </tbody>
+</table>
+<br>
+
+<input type = "text" id = "test3" placeholder="user email 입력해주세요">
+<button onclick="test3()">
+    유저(usermail)의 정보 조회
+</button>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">userId</th>
+        <th scope="col">가입일</th>
+        <th scope="col">수정일</th>
+        <th scope="col">권한(정상아님)</th>
+        <th scope="col">Email</th>
+        <th scope="col">kakaoId</th>
+        <th scope="col">프로필사진경로</th>
+        <th scope="col">비밀번호</th>
+        <th scope="col">유저이름</th>
+    </tr>
+    </thead>
+    <tbody id="oneuserbyemal">
+
+    </tbody>
+</table>
+<br>
+<input type = "text" id = "test4" placeholder="cardId 입력해주세요">
+<button onclick="test4()">
+    카드번호(cardId)로 카드 하나 조회
+</button>
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">cardId</th>
+        <th scope="col">생성일</th>
+        <th scope="col">수정일</th>
+        <th scope="col">카드순서</th>
+        <th scope="col">내용</th>
+        <th scope="col">경로</th>
+        <th scope="col">해시태그들</th>
+        <th scope="col">제목</th>
+        <th scope="col">userId</th>
+    </tr>
+    </thead>
+    <tbody id="cardone">
+
+    </tbody>
+</table>
+<br>
+<input type = "text" id = "test5" placeholder="tagId 입력해주세요">
+<button onclick="test5()">
+    tagId로 태그 조회
+</button>
+<br>
+<input type = "text" id = "test" placeholder="tagName 입력해주세요">
+<button onclick="test6()">
+    tagName으로 태그 조회
+</button>
+<br>
+</body>
+</html>

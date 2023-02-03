@@ -1,0 +1,14 @@
+logging:
+config: classpath:log4j2.xml
+
+# Spring Doc Config
+springdoc:
+  api-docs:
+    path: /contap/api-docs #doc default path : /v3/api-docs
+    groups.enabled: true
+  swagger-ui:
+    path: /swagger-ui.html #swagger default path : /swagger-ui.html
+    display-request-duration: true
+    disable-swagger-default-url: true
+    groups-order: DESC
+

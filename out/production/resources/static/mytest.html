@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{room.name}}</title>
+    <script src="/webjars/jquery/dist/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>16조 채팅방</h1>
+<div class="content" data-room-id="{{room.id}}" data-member="{{member}}">
+    <ul class="chat_box">
+    </ul>
+    <textarea id = 'memo'></textarea>
+    <button class="send" , onclick="enterroom()">입장</button>
+    <br>
+    <br>
+    <textarea id = 'msg'></textarea>
+    <button class="senddd">보내기</button>
+</div>
+<script>
+    console.log(window.location.href);
+    let roomId=window.location.href.split("?")[1];
+    let userId=window.location.href.split("?")[2];
+    console.log("roomId===============userId");
+    console.log(roomId);
+    console.log(userId);
+    console.log("roomId===============userId");
+
+    var sock = new SockJS("/ws-stomp");
+    var client = Stomp.over(sock);
+    client.connect({}, function () {
+        client.subscribe(`/sub/chat/room/${roomId}` , function (chat) {
+            var content = JSON.parse(chat.body);
+            console.log(content)
+            chatBox.append('<li>' + content.writer+" : " + content.message + '</li>')
+        },{"userEmail":userId});
+    });
+    var chatBox = $('.chat_box');
+    var messageInput = $('input[name="message"]');
+    var sendBtn = $('.senddd');
+    sendBtn.click(function () {
+        let message123 =$("#msg").val();
+        client.send('/pub/chat/message', {}, JSON.stringify({"roomId": roomId, message: message123, "writer":userId,}));
+        messageInput.val('');
+    });
+
+</script>
+</body>
+</html>

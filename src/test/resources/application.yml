@@ -1,0 +1,2 @@
+#github Action에서 ApplicationTest 파일 내 선언된 @SpringBootTest 어노테이션 때문에 DB 커넥션 정보를 찾는다. 이 때 커넥션 정보가 없어 에러가 나는 것을 방지하기 위해 만듦.
+#workflow gradle.yml에도 빌드 시 테스트는 스킵할 수 있도록 -x test 처리하긴함. (빌드 시에는 테스트 스킵)

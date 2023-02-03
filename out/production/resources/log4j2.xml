@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="DEBUG">
+    <Properties>
+        <Property name="Log_Exception">Log_Exception</Property>
+        <Property name="Log_APIUseTime">Log_APIUseTime</Property>
+        <Property name="consoleLayout">%style{%d{ISO8601}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable</Property>
+        <Property name="fileLayout">%d [%t] %-5level %c(%M:%L) - %m%n</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${consoleLayout}" />
+        </Console>
+
+        <RollingFile name="logExeption" fileName="C:/logs/${Log_Exception}.log" filePattern="C:/logs/${Log_Exception}.%d{yyyy-MM-dd}.log.zip">
+            <PatternLayout pattern="${fileLayout}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1" /><!-- 시간별 로그 파일 생성-->
+            </Policies>
+            <DefaultRolloverStrategy max="5" fileIndex="min" /><!-- 롤링 파일 5개 까지 생성 -->
+        </RollingFile>
+
+        <RollingFile name="logApiTime" fileName="C:/logs/${Log_APIUseTime}.log" filePattern="C:/logs/${Log_APIUseTime}.%d{yyyy-MM-dd-hh}.log.zip">
+            <PatternLayout pattern="${fileLayout}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1" />
+            </Policies>
+            <DefaultRolloverStrategy max="5" fileIndex="min" />
+        </RollingFile>
+
+
+<!--            //서버용 로그-->
+<!--        <RollingFile name="Exc" fileName="/home/ubuntu/log/test1.log" filePattern="/home/ubuntu/log/${logFileName}.%d{yyyy-MM-dd-hh}.log">-->
+<!--            <PatternLayout pattern="${fileLayout}" />-->
+<!--            <Policies>-->
+<!--                <TimeBasedTriggeringPolicy modulate="true" interval="1" />&lt;!&ndash; 시간별 로그 파일 생성&ndash;&gt;-->
+<!--            </Policies>-->
+<!--            <DefaultRolloverStrategy max="5" fileIndex="min" />&lt;!&ndash; 롤링 파일 5개 까지 생성 &ndash;&gt;-->
+<!--        </RollingFile>-->
+
+<!--        <RollingFile name="file3" fileName="/home/ubuntu/log/test2.log" filePattern="/home/ubuntu/log/${logFileName}.%d{yyyy-MM-dd-hh}.log">-->
+<!--            <PatternLayout pattern="${fileLayout}" />-->
+<!--            <Policies>-->
+<!--                <TimeBasedTriggeringPolicy modulate="true" interval="1" />&lt;!&ndash; 시간별 로그 파일 생성&ndash;&gt;-->
+<!--            </Policies>-->
+<!--            <DefaultRolloverStrategy max="5" fileIndex="min" />&lt;!&ndash; 롤링 파일 5개 까지 생성 &ndash;&gt;-->
+<!--        </RollingFile>-->
+    </Appenders>
+
+    <Loggers>
+        <logger name="AddExeption" additivity="true" >
+            <AppenderRef ref="logExeption" level="debug" />
+        </logger>
+        <logger name="AddApiTime" additivity="true" >
+            <AppenderRef ref="logApiTime" level="debug" />
+        </logger>
+    </Loggers>
+</Configuration>
